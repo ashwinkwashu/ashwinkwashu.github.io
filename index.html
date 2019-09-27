@@ -38,7 +38,7 @@
     d3.select(this)
         .style("pointer-events", "mousedown")
         .transition()
-        .attr("transform", "translate(480,480)scale(8)rotate(180)")
+        .attr("transform", "translate(" + h/2 + ","+ w/2 +")scale(8)rotate(180)")
 
         .transition().duration(400)
         .attr("transform",translate);;

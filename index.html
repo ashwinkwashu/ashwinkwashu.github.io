@@ -21,7 +21,7 @@
         // .attr("width", w)
         // .attr("height", h);
 
-    svg.selectAll("rect")
+    svg.selectAll("circle")
         .data(d3.range(x * y))
     .enter().append("circle")
         .attr("transform", translate)
@@ -38,7 +38,7 @@
         .attr("width", z)
         .attr("height", z)
         .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
-        .on("mouseover", mouseover);
+        .on("mouseover", mouseover1);
 
 
     function translate(d) {

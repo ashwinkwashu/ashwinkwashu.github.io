@@ -26,7 +26,7 @@
         .attr("r",z/1.5)
         .attr("height", z/2)
         .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
-        .on("mouseover", mouseover1);
+        .on("mouseover", mouseover);
 
     function translate(d) {
     return "translate(" + ((d % x) * z +10) + "," + (Math.floor(d / x) * z+10) + ")";

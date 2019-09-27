@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <h1>Hello World</h1>
-        <p>Here is something to have fun with.</p>
+        <h1>Welcome!</h1>
+        <p>I am Ashwin Kumar, a PhD student at Washington University in St. Louis. Thanks for visiting!
+            Here is something to have fun with.</p>
     </body>
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script>
@@ -23,29 +24,31 @@
 
 
     
-    // svg.selectAll("rect")
-    //     .data(d3.range(x * y))
-    // .enter().append("rect")
-    //     .attr("transform", translate1)
-    //     .attr("width", z)
-    //     .attr("height", z)
-    //     .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
-    //     .on("mouseover", mouseover1);
-    
-    // function translate1(d) {
-    // return "translate(" + ((d % x) * z) + "," + (Math.floor(d / x) * z) + ")";
-    // }
-
-
-    svg.selectAll("circle")
+    svg.selectAll("rect")
         .data(d3.range(x * y))
-    .enter().append("circle")
-        .attr("transform", translate)
-        .attr("width", z/2)
-        .attr("r",z/1.5)
-        .attr("height", z/2)
+    .enter().append("rect")
+        .attr("transform", translate1)
+        .attr("width", z)
+        .attr("height", z)
+        .attr("rx",z/2)
+        .attr("ry",z/2)
         .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
-        .on("mouseover", mouseover);
+        .on("mouseover", mouseover1);
+    
+    function translate1(d) {
+    return "translate(" + ((d % x) * z) + "," + (Math.floor(d / x) * z) + ")";
+    }
+
+
+    // svg.selectAll("circle")
+    //     .data(d3.range(x * y))
+    // .enter().append("circle")
+    //     .attr("transform", translate)
+    //     .attr("width", z/2)
+    //     .attr("r",z/1.5)
+    //     .attr("height", z/2)
+    //     .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
+    //     .on("mouseover", mouseover);
     
 
 

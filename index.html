@@ -29,7 +29,7 @@
         .on("mouseover", mouseover1);
 
     function translate(d) {
-    return "translate(" + (d % x) * z + "," + Math.floor(d / x) * z + ")";
+    return "translate(" + ((d % x) * z +10) + "," + (Math.floor(d / x) * z+10) + ")";
     }
 
     function mouseover(d) {

@@ -29,7 +29,7 @@
         .on("mouseover", mouseover);
 
     function translate(d) {
-    return "translate(" + ((d % x) * z +10) + "," + (Math.floor(d / x) * z+10) + ")";
+    return "translate(" + ((d % x) * z + z) + "," + (Math.floor(d / x) * z+ z) + ")";
     }
 
     function mouseover(d) {
@@ -40,7 +40,7 @@
         .transition()
         .attr("transform", "translate(480,480)scale(8)rotate(180)")
 
-        .transition().duration(2000)
+        .transition().duration(400)
         .attr("transform",translate);;
     }
 

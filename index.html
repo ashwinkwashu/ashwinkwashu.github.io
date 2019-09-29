@@ -1,29 +1,135 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ashwin : Home</title>
+        <!-- Open Sans for body font -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700,800" rel="stylesheet">
+        <!-- Poppins for Title -->
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+        <!-- <link href="style.css" rel="stylesheet">
+        <link id="switcher" href="theme.css" rel="stylesheet"> -->
+
+        <style>
+                div {text-align:center;}
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 700;
+                    margin-top: 0;
+                }
+
+                body {
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: 15px;
+                    letter-spacing: 0.5px;
+                    line-height: 1.5;
+                    color: #ecebeb;
+                }
+
+                /* #Set1Text {
+                background-image: linear-gradient(to bottom, #339999, #339999, black); 
+                } */
+
+                </style>
+    </head>
     <body>
-        <h1>Welcome!</h1>
-        <p>I am Ashwin Kumar, a PhD student at Washington University in St. Louis. Thanks for visiting!
-            Here is something to have fun with.</p>
+        <div id="Banner" style="position: fixed; margin-top: 10px; margin-left: 0px; width:100%; height: 100px;">
+            <a href="#Set1"><h1 style="float:left; margin-top: 0px; color: white">ASHWIN</h1></a>
+            <h1 id="time" style="float:right; margin-right: 20px"></h1>
+            <a href="#content"><h1 style="float:right; margin-right: 30px; margin-top: 0px; color: white">CONTACT</h1></a>
+            
+        </div>
+        <div id="Set1" style="margin-top: -10px; margin-left:-10px; margin-right:-30px; margin-bottom: -10px" >
+            <div id="Set1Text" style="background-image:linear-gradient(to bottom,#339999, #339999, black);margin-top: -10px; margin-left:-10px; margin-right:-10px; margin-bottom: -10px " >
+                <div style=" padding-top: 50px">I am  </div>
+                <div style="font-size: 30px">Ashwin Kumar</div>
+                <div style="padding-bottom: 50px;"> a PhD student at Washington University in St. Louis. Thanks for visiting!
+                    </div>
+                <div style="padding-bottom: 70px; padding-top :30px">Here is something to have fun with. Try clicking!</div>
+            </div>
+            <div id="vis" style = "left:0px;right:0px;"></div>
+            
+        </div>
+        <div id="content" style="color:#1c1b1b;  margin-left:-10px; margin-right:-10px; margin-bottom: 10px">
+            <div style="padding-top: 50px;font-family: 'Poppins', sans-serif;
+            font-size: 40px;">CONTACT</div>
+             <div>
+                <br>
+                 <a href="mailto:ashwinkumar@wustl.edu">ashwinkumar@wustl.edu</a>
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <a href="index2.html">Legacy Site</a>
+                </div> 
+        </div>
     </body>
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script>
-    
-        
+    d3.selectAll("h1")
+            .style("color",d3.hsl(0,0,1));
+
+    //To display time
+    function checkTime(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+        }
+    function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    // add a zero in front of numbers<10
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML = h + ":" + m ;
+    t = setTimeout(function() {
+        startTime()
+    }, 500);
+    }
+    startTime();
+
+    //For the visualisation
     var w = 960,
         h = 500,
         z = 10,
         x = w / z,
-        y = h / z;
-    // w = w+z;
-    // h = h + z;
-
-    var svg = d3.select("body").append("svg")
+        y = h / z,
+        w=w-z,
+        h=h-z;
+    var svg = d3.select("body").select("#vis").append("svg")
         .attr("viewBox","0 0 "+ w + " " + h);
-        // .attr("width", w)
-        // .attr("height", h);
 
-    svg.append("rect").attr("width",w).attr("height",h).style("fill",d3.hsl(1,1,1));
-    
+    svg.selectAll("circle")
+        .data(d3.range(x * y))
+    .enter().append("circle")
+        .attr("transform", translate)
+        .attr("width", z/2)
+        .attr("r",z)
+        .attr("height", z/2)
+        .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
+        .on("click", mouseclick);
+
     svg.selectAll("rect")
         .data(d3.range(x * y))
     .enter().append("rect")
@@ -33,21 +139,13 @@
         .attr("rx",0)
         .attr("ry",0)
         .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
-        .on("mouseover", mouseover);
+        .on("mouseover", mouseover)
+        .on("click",mouseclick);
     
     function translate1(d) {
     return "translate(" + ((d % x) * z) + "," + (Math.floor(d / x) * z) + ")";
     }
-    // svg.selectAll("circle")
-    //     .data(d3.range(x * y))
-    // .enter().append("circle")
-    //     .attr("transform", translate)
-    //     .attr("width", z/2)
-    //     .attr("r",z/1.5)
-    //     .attr("height", z/2)
-    //     .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
-    //     .on("mouseover", mouseover);
-    
+
     function translate(d) {
     return "translate(" + ((d % x) * z + z) + "," + (Math.floor(d / x) * z+ z) + ")";
     }
@@ -59,13 +157,12 @@
         .attr("rx",z/2)
         .attr("ry",z/2)
         .attr("transform", "translate(" + (w/2 + 8*z/2) + ","+ (h/2+8*z/2) +")scale(8)rotate(180)")
-        .transition().duration(400)
-        .attr("rx",z/5)
-        .attr("ry",z/5)
+        .transition().duration(900)
+        .attr("rx",0)
+        .attr("ry",0)
         .attr("transform",translate1);;
     }
     function mouseover1(d) {
-    this.parentNode.appendChild(this);
     d3.select(this)
         .style("pointer-events", "mousedown") // changing this from none to mousdown made this repeatable
         .transition()
@@ -75,6 +172,24 @@
         .attr("transform",translate1+"rotate(278)");//"translate("+d.x +"," + d.y +")scale(2)rotate(180)");
     }
     
+    function mouseclick(d) {
+        this.parentNode.appendChild(this);
+        var coords = d3.mouse(this);
+        //d3.selectAll("#content").style("background-image", "linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);");
+        var col=d3.hsl(1-d % x / x * 360, 1, 1-Math.floor(d / x) / y),
+            col2=d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y);
+        d3.selectAll("#content").style("background-color", col2);   
+        d3.select("#Set1Text").style("color",col2);
+        d3.selectAll("#content").transition().style("color",col).duration(100);
+        if (Math.floor(d / x) / y <0.5){
+            d3.selectAll("h1").transition()
+            .style("color",d3.hsl(0,0,1)).duration(100);
+        }
+        else{
+            d3.selectAll("h1").transition()
+            .style("color",d3.hsl(0,0,0)).duration(1000);
+        }
+    }
     
     </script>
 </html>

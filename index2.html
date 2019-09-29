@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Welcome!</h1>
+        <p>I am Ashwin Kumar, a PhD student at Washington University in St. Louis. Thanks for visiting!
+            Here is something to have fun with.</p>
+    </body>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script>
+    
+        
+    var w = 960,
+        h = 500,
+        z = 10,
+        x = w / z,
+        y = h / z;
+    // w = w+z;
+    // h = h + z;
+    var svg = d3.select("body").append("svg")
+        .attr("viewBox","0 0 "+ w + " " + h);
+        // .attr("width", w)
+        // .attr("height", h);
+    svg.append("rect").attr("width",w).attr("height",h).style("fill",d3.hsl(1,1,1));
+    
+    svg.selectAll("rect")
+        .data(d3.range(x * y))
+    .enter().append("rect")
+        .attr("transform", translate1)
+        .attr("width", z)
+        .attr("height", z)
+        .attr("rx",0)
+        .attr("ry",0)
+        .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
+        .on("mouseover", mouseover);
+    
+    function translate1(d) {
+    return "translate(" + ((d % x) * z) + "," + (Math.floor(d / x) * z) + ")";
+    }
+    // svg.selectAll("circle")
+    //     .data(d3.range(x * y))
+    // .enter().append("circle")
+    //     .attr("transform", translate)
+    //     .attr("width", z/2)
+    //     .attr("r",z/1.5)
+    //     .attr("height", z/2)
+    //     .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
+    //     .on("mouseover", mouseover);
+    
+    function translate(d) {
+    return "translate(" + ((d % x) * z + z) + "," + (Math.floor(d / x) * z+ z) + ")";
+    }
+    function mouseover(d) {
+    this.parentNode.appendChild(this);
+    d3.select(this)
+        .style("pointer-events", "mousedown")
+        .transition()
+        .attr("rx",z/2)
+        .attr("ry",z/2)
+        .attr("transform", "translate(" + (w/2 + 8*z/2) + ","+ (h/2+8*z/2) +")scale(8)rotate(180)")
+        .transition().duration(400)
+        .attr("rx",z/5)
+        .attr("ry",z/5)
+        .attr("transform",translate1);;
+    }
+    function mouseover1(d) {
+    this.parentNode.appendChild(this);
+    d3.select(this)
+        .style("pointer-events", "mousedown") // changing this from none to mousdown made this repeatable
+        .transition()
+        .attr("rx",z/2)
+        .attr("transform", "translate(" + (d % x-1) * z  + "," + Math.floor(d / x -1) * z +")" + " scale(" + 3 + ")")
+        .transition().duration(2000)
+        .attr("transform",translate1+"rotate(278)");//"translate("+d.x +"," + d.y +")scale(2)rotate(180)");
+    }
+    
+    
+    </script>
+</html>
